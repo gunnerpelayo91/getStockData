@@ -6,11 +6,11 @@ library(xts)
 library(BatchGetSymbols)
 
 # set dates
-first.date <- Sys.Date() - 550
+first.date <- Sys.Date() - 1460
 last.date <- Sys.Date()
 freq.data <- 'daily'
 # set tickers
-tickers <- c('NFLX','HD' )
+tickers <- c('CRC')
 
 l.out <- BatchGetSymbols(tickers = tickers, 
                          first.date = first.date,
@@ -23,15 +23,22 @@ head(l.out)
 
 
 ## stock names:
-plot(l.out$df.tickers$volume[l.out$df.tickers$ticker == "HD"]/1.e5,type='l',
-     ylab = 'volume (10000s)', xlab = 'day', main='HD')
+stockname=c("CRC")
+
+
+
+plot(l.out$df.tickers$volume[l.out$df.tickers$ticker == stockname[i]]/1.e5,type='l',
+     ylab = 'volume (10000s)', xlab = 'day', main=stockname[i])
 grid()
 
-plot(l.out$df.tickers$price.close[l.out$df.tickers$ticker == "HD"],
-     type='l', ylab = 'price $', xlab = 'day', main="HD")
+
+
+
+plot(l.out$df.tickers$price.close[l.out$df.tickers$ticker == stockname[i]],
+     type='l', ylab = 'price $', xlab = 'day', main=stockname[i])
 grid()
 
-write.csv(l.out$df.tickers,'NFLX.csv')
 
-plot(l.out$df.tickers$ref.date,l.out$df.tickers$price.close,type='l')
+write.csv(l.out$df.tickers[l.out$df.tickers$ticker == 'CRC',],'CRC.csv')
 
+plot(l.out$df.tickers$ref.date,l.out$df.tickers$price.close,type="p")
